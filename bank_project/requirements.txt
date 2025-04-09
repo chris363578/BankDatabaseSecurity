@@ -1,0 +1,9 @@
+asgiref==3.8.1
+cffi==1.17.1
+cryptography==44.0.2
+Django==5.2
+Faker==37.1.0
+mysqlclient==2.2.7
+pycparser==2.22
+sqlparse==0.5.3
+tzdata==2025.2
