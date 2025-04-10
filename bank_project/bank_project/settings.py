@@ -73,14 +73,32 @@ WSGI_APPLICATION = 'bank_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'bank_db',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bank_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'USER': 'chris-database-security-project',
+        'PASSWORD': 'password',
+        'HOST': '104.155.140.227',
         'PORT': '3306',
+        'OPTIONS': {
+            'ssl': {
+                'ca': str(BASE_DIR / 'server-ca.pem'),
+                'cert': str(BASE_DIR / 'client-cert.pem'),
+                'key': str(BASE_DIR / 'client-key.pem'),
+            }
+        }
     }
 }
 
