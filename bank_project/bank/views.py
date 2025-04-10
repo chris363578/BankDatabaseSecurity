@@ -11,6 +11,7 @@ def about_page(request):
     if request.method == "POST":
         sql_user = request.POST.get("username")
         sql_pass = request.POST.get("password")
+        sql_instance = request.POST.get("instance")
         users = [
             'chris-database-security-project', 
             'customer_user',
@@ -25,9 +26,14 @@ def about_page(request):
         base_dir = Path(__file__).resolve().parent.parent  # this is project root
         ssl_dir = base_dir / 'bank_project' / 'ssl' / sql_user
 
-        ssl_cert = ssl_dir / 'client-cert.pem'
-        ssl_key = ssl_dir / 'client-key.pem'
-        ssl_ca = ssl_dir / 'server-ca.pem'
+        if sql_instance == '34.41.109.178':
+            ssl_cert = ssl_dir / 'replica' / 'client-cert.pem'
+            ssl_key = ssl_dir / 'replica' / 'client-key.pem'
+            ssl_ca = ssl_dir / 'replica' / 'server-ca.pem'
+        else:
+            ssl_cert = ssl_dir / 'main' / 'client-cert.pem'
+            ssl_key = ssl_dir / 'main' / 'client-key.pem'
+            ssl_ca = ssl_dir / 'main' / 'server-ca.pem'
 
 
         print("Cert path debug:")
@@ -37,7 +43,7 @@ def about_page(request):
 
         try:
             conn = pymysql.connect(
-                host='104.155.140.227',
+                host=sql_instance,
                 user=sql_user,
                 password=sql_pass,
                 database='bank_db',
@@ -65,6 +71,7 @@ def about_page(request):
         <form method="POST">
             <input type="text" name="username" placeholder="SQL Username"><br><br>
             <input type="password" name="password" placeholder="SQL Password"><br><br>
+            <input type="text" name="instance" placeholder="Instance IP or Hostname"><br><br>
             <button type="submit">Login</button>
         </form>
     </body>
