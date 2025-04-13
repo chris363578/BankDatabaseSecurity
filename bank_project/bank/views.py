@@ -1,10 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 import pymysql
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from pathlib import Path
-from google.cloud import logging_v2
-from django.http import JsonResponse
 
 @csrf_exempt
 def about_page(request):
@@ -17,15 +14,12 @@ def about_page(request):
             'customer_user',
             'employee_dbeditor',
             'employee_dbviewer'
-            ]
-
-        #sql_user = users[3]
-        #sql_pass = 'password'
-
+        ]
 
         base_dir = Path(__file__).resolve().parent.parent  # this is project root
         ssl_dir = base_dir / 'bank_project' / 'ssl' / sql_user
 
+        # Set the paths based on the instance
         if sql_instance == '34.41.109.178':
             ssl_cert = ssl_dir / 'replica' / 'client-cert.pem'
             ssl_key = ssl_dir / 'replica' / 'client-key.pem'
@@ -35,13 +29,13 @@ def about_page(request):
             ssl_key = ssl_dir / 'main' / 'client-key.pem'
             ssl_ca = ssl_dir / 'main' / 'server-ca.pem'
 
-
         print("Cert path debug:")
         print("CA     :", ssl_ca, ssl_ca.exists())
         print("Cert   :", ssl_cert, ssl_cert.exists())
         print("Key    :", ssl_key, ssl_key.exists())
 
         try:
+            # Establish SSL connection to MySQL
             conn = pymysql.connect(
                 host=sql_instance,
                 user=sql_user,
@@ -51,9 +45,10 @@ def about_page(request):
                     'ca': str(ssl_ca),
                     'cert': str(ssl_cert),
                     'key': str(ssl_key),
-                    'check_hostname': False
+                    'check_hostname': True  # Set to True to verify the certificate
                 }
             )
+            
             with conn.cursor() as cursor:
                 cursor.execute("SELECT CURRENT_USER();")
                 user_info = cursor.fetchone()
@@ -78,30 +73,69 @@ def about_page(request):
     </html>
     """)
 
+from django.http import HttpResponse
+from django.db import connection
+from django.views.decorators.csrf import csrf_exempt
 
-# def get_sql_logs(request):
-#     client = logging_v2.LoggingServiceV2Client()
+PREDEFINED_QUERIES = {
+    'bank_account_columns': {
+        'label': 'SHOW COLUMNS FROM bank_account;',
+        'sql': 'SHOW COLUMNS FROM bank_account;'
+    },
+    'all_accounts': {
+        'label': 'SELECT * FROM bank_account LIMIT 10;',
+        'sql': 'SELECT * FROM bank_account LIMIT 10;'
+    },
+    # Add more queries here
+}
 
-#     project_id = "your-project-id"
-#     log_filter = """
-#         resource.type="cloudsql_database"
-#         logName="projects/your-project-id/logs/mysql-general.log"
-#     """
+@csrf_exempt
+def sql_dashboard(request):
+    result_html = ""
+    selected_query_key = None
 
-#     request_logs = {
-#         "resource_names": [f"projects/{project_id}"],
-#         "filter": log_filter,
-#         "order_by": "timestamp desc",
-#         "page_size": 10
-#     }
+    if request.method == "POST":
+        selected_query_key = request.POST.get('query_key')
+        query = PREDEFINED_QUERIES.get(selected_query_key, {}).get('sql')
 
-#     entries = client.list_log_entries(request_logs)
+        if query:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                headers = [col[0] for col in cursor.description] if cursor.description else []
+                rows = cursor.fetchall()
 
-#     logs = []
-#     for entry in entries:
-#         logs.append({
-#             "timestamp": entry.timestamp.ToJsonString(),
-#             "text": entry.text_payload
-#         })
+                # Build HTML table
+                result_html += "<table border='1'><thead><tr>"
+                result_html += "".join(f"<th>{header}</th>" for header in headers)
+                result_html += "</tr></thead><tbody>"
+                for row in rows:
+                    result_html += "<tr>" + "".join(f"<td>{col}</td>" for col in row) + "</tr>"
+                result_html += "</tbody></table>"
 
-#     return JsonResponse({"logs": logs})
+    # Build buttons for predefined queries
+    buttons_html = ""
+    for key, info in PREDEFINED_QUERIES.items():
+        buttons_html += f"""
+        <form method="POST" style="display:inline;">
+            <input type="hidden" name="query_key" value="{key}">
+            <button type="submit">{info['label']}</button>
+        </form>
+        """
+
+    # Final page
+    html = f"""
+    <html>
+    <head>
+        <title>SQL Dashboard</title>
+    </head>
+    <body>
+        <h1>Predefined SQL Dashboard</h1>
+        {buttons_html}
+        <hr>
+        {f"<h3>Result for: {PREDEFINED_QUERIES[selected_query_key]['label']}</h3>" if selected_query_key else ""}
+        {result_html}
+    </body>
+    </html>
+    """
+
+    return HttpResponse(html)
