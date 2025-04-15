@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Banking Database System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Use Inter font, Tailwind's default sans-serif */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Add a subtle gradient for visual appeal */
+        .hero-gradient {
+            background: linear-gradient(to bottom right, #e0f2fe, #fafafa);
+            /* Light blue to off-white */
+        }
+
+        /* Custom animation for subtle hover effects */
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏦</text></svg>">
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="font-bold text-xl text-indigo-600 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                SecureBank DB
+            </a>
+            <div>
+                <a href="#"
+                    class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                <a href="#features"
+                    class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Features</a>
+                <a href="#security"
+                    class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Security</a>
+                <a href="/login/"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out ml-4">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-gradient py-20 md:py-32">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4 leading-tight">
+                Fortified Database Solutions for Modern Banking
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Experience unparalleled security, reliability, and compliance with our database system, engineered
+                specifically for the rigorous demands of the financial sector.
+            </p>
+            <a href="/login/"
+                class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-md text-lg transition duration-150 ease-in-out">
+                Access Secure Portal
+            </a>
+        </div>
+    </section>
+
+    <section id="features" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Core System Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <div
+                    class="feature-card bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200 transition duration-300 ease-in-out">
+                    <div class="flex items-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500 mr-3" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                        <h3 class="text-xl font-semibold text-gray-700">End-to-End Encryption</h3>
+                    </div>
+                    <p class="text-gray-600">
+                        Data is encrypted both at rest and in transit using industry-standard algorithms, protecting
+                        sensitive information from unauthorized access.
+                    </p>
+                </div>
+
+                <div
+                    class="feature-card bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200 transition duration-300 ease-in-out">
+                    <div class="flex items-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500 mr-3" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <h3 class="text-xl font-semibold text-gray-700">Granular Access Control</h3>
+                    </div>
+                    <p class="text-gray-600">
+                        Implement role-based access policies ensuring users can only access the data and perform actions
+                        necessary for their job function. Integration with secure authentication mechanisms.
+                    </p>
+                </div>
+
+                <div
+                    class="feature-card bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200 transition duration-300 ease-in-out">
+                    <div class="flex items-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500 mr-3" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <h3 class="text-xl font-semibold text-gray-700">Comprehensive Audit Logs</h3>
+                    </div>
+                    <p class="text-gray-600">
+                        Immutable logs record all critical activities, including data access, modifications, and
+                        administrative changes, ensuring accountability and aiding forensic analysis.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="security" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Built on a Foundation of Security</h2>
+            <p class="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
+                Our system architecture prioritizes security at every layer, from infrastructure hardening to
+                application-level safeguards, helping you meet stringent regulatory compliance requirements like PCI
+                DSS, GDPR, and more.
+            </p>
+            <div class="flex justify-center space-x-8 text-gray-500">
+                <span>PCI DSS Ready</span>
+                <span>GDPR Compliant</span>
+                <span>Regular Audits</span>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="bg-gray-800 text-gray-300 py-8">
+        <div class="container mx-auto px-6 text-center text-sm">
+            &copy; 2025 SecureBank DB Solutions. All rights reserved. | <a href="#"
+                class="hover:text-indigo-400">Privacy Policy</a> | <a href="#" class="hover:text-indigo-400">Terms of
+                Service</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

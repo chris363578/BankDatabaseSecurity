@@ -12,15 +12,20 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print("Base Directory:", BASE_DIR)
+print("Current Directory:", Path.cwd())
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a#hc#z=4_31sft34+2u%evkv%l0qbfb!vdiq&l_a$=h5l&@bxt'
+SECRET_KEY = f'django-insecure-a#hc#z=4_31sft34+2u%evkv%l0qbfb!vdiq&l_a$=h5l&@bxt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bank.apps.BankConfig',
+    'bank.apps.BankConfig'
 
 ]
 
@@ -52,11 +57,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'bank_project.urls'
-
+import os
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,7 +88,6 @@ WSGI_APPLICATION = 'bank_project.wsgi.application'
 #         'PORT': '3306',
 #     }
 # }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -97,7 +101,8 @@ DATABASES = {
                 'ca': str(BASE_DIR / 'server-ca.pem'),
                 'cert': str(BASE_DIR / 'client-cert.pem'),
                 'key': str(BASE_DIR / 'client-key.pem'),
-            }
+       
+            },
         }
     }
 }
